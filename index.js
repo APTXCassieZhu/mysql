@@ -21,12 +21,15 @@ app.get('/', function(req, res, next) {
 });
 
 app.get('/hw7', function(req, res, next){
-    var query = "SELECT * FROM assists WHERE Club = '?' AND POS = '?' ORDER BY A";
+    var query = "SELECT * FROM assists WHERE Club = '?' AND POS = '?' ORDER BY A, GS";
     con.query(query, [req.body.club, req.body.pos], function (err, result, fields) {
         if (err) 
             console.log(err); 
         console.log(result);
-        return res.json({club:req.body.club, pos: req.body.pos, max_assists: max, player: player, avg_assists: avg});
+        //var max = 0;
+        //var avg = 0;
+        //return res.json({club:req.body.club, pos: req.body.pos, max_assists: max, player: player, avg_assists: avg});
+        return res.send("OK");
       });
 });
 
