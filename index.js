@@ -21,7 +21,8 @@ app.get('/', function(req, res, next) {
 });
 
 app.get('/hw7', function(req, res, next){
-    var query = "SELECT * FROM assists WHERE Club = '?' AND POS = '?' ORDER BY A, GS";
+    // get the max assist
+    var query = "SELECT * FROM assists WHERE Club = '?' AND POS = '?' ORDER BY A DESC, GS DESC";
     con.query(query, [req.body.club, req.body.pos], function (err, result, fields) {
         if (err) 
             console.log(err); 
