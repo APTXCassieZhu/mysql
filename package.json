@@ -1,5 +1,5 @@
 {
-  "name": "mysql",
+  "name": "mysql-test",
   "version": "1.0.0",
   "description": "hw7",
   "main": "index.js",
@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/APTXCassieZhu/mysql/issues"
   },
-  "homepage": "https://github.com/APTXCassieZhu/mysql#readme"
+  "homepage": "https://github.com/APTXCassieZhu/mysql#readme",
+  "dependencies": {
+    "mysql": "^2.16.0"
+  }
 }
