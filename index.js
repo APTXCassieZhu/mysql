@@ -1,7 +1,7 @@
 var express = require('express');
 const app = express();
 var mysql = require('mysql');
-const port = 3000;
+const port = 3001;
 
 var con = mysql.createConnection({
     host: "localhost",
@@ -34,6 +34,8 @@ app.get('/hw7', function(req, res, next){
       });
 });
 
-app.listen(port,'0.0.0.0', () => {
-    return console.log(`App listening on port ${port}!`);
-})
+//app.listen(port,'0.0.0.0', () => {
+//    return console.log(`App listening on port ${port}!`);
+//})
+app.listen(80);
+
