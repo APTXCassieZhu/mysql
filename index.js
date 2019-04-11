@@ -26,6 +26,7 @@ app.get('/', function(req, res, next) {
 app.get('/hw7', function(req, res, next){
     var key = req.query.club + req.query.pos;
     memcached.get(key, function (err, data) {
+        console.log("data is "+data);
         if(err || !data){
             console.log("err"+err);
             var query = "SELECT * FROM assists WHERE Club = ? AND POS = ? ORDER BY A DESC, GS DESC;";
