@@ -30,7 +30,7 @@ app.get('/hw7', function(req, res, next){
             console.log(err); 
         console.log(result);
         console.log(result[0]);
-        return res.json({club:req.body.club, pos: req.body.pos, max_assists: result[0][0].A, 
+        return res.json({club:req.query.club, pos: req.query.pos, max_assists: result[0][0].A, 
             player: result[0][0].player, avg_assists: result[1][0]["AVG(A)"]});
       });
 });
