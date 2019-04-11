@@ -37,9 +37,11 @@ app.get('/hw7', function(req, res, next){
                 //console.log(result[0]);
                 var value = {club:req.query.club, pos: req.query.pos, max_assists: result[0][0].A, 
                     player: result[0][0].Player, avg_assists: result[1][0]["AVG(A)"]}
+                console.log("set before");
                 memcached.set(key, value, function(err, data){
                     console.log("set data"+data);
                 });
+                console.log("set after");
                 return res.json(value);
             });
         }else{
