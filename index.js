@@ -19,6 +19,13 @@ con.connect(function(err) {
     console.log("Connected!");
 });
 
+memcached.set('key','value01');
+memcached.get('key', function(err, data){
+    console.log("data is "+data);
+});
+
+
+
 app.get('/', function(req, res, next) {
     res.send("OK");
 });
