@@ -24,17 +24,26 @@ app.get('/', function(req, res, next) {
 });
 
 app.get('/hw7', function(req, res, next){
-    // get the max assist
-    var query = "SELECT * FROM assists WHERE Club = ? AND POS = ? ORDER BY A DESC, GS DESC;";
-    query += "SELECT AVG(A) FROM (SELECT * FROM assists WHERE Club= ? AND POS = ?) as avg;";
-    con.query(query, [req.query.club, req.query.pos, req.query.club, req.query.pos], function (err, result, fields) {
-        if (err) 
-            console.log(err); 
-        console.log(result);
-        console.log(result[0]);
-        return res.json({club:req.query.club, pos: req.query.pos, max_assists: result[0][0].A, 
-            player: result[0][0].Player, avg_assists: result[1][0]["AVG(A)"]});
-      });
+    var key = req.query.club + req.query.pos;
+    memcached.get(key, function (err, data) {
+        if(err){
+            var query = "SELECT * FROM assists WHERE Club = ? AND POS = ? ORDER BY A DESC, GS DESC;";
+            query += "SELECT AVG(A) FROM (SELECT * FROM assists WHERE Club= ? AND POS = ?) as avg;";
+            con.query(query, [req.query.club, req.query.pos, req.query.club, req.query.pos], function (err, result, fields) {
+                if (err) 
+                    console.log(err); 
+                console.log(result);
+                console.log(result[0]);
+                var value = {club:req.query.club, pos: req.query.pos, max_assists: result[0][0].A, 
+                    player: result[0][0].Player, avg_assists: result[1][0]["AVG(A)"]}
+                memcached.set(key, value, function(err, data){});
+                return res.json(value);
+            });
+        }else{
+            console.log(data);
+            return res.json(data);
+        }
+    });
 });
 
 app.listen(80);
