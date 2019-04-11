@@ -1,6 +1,8 @@
 var express = require('express');
 const app = express();
 var mysql = require('mysql');
+var Memcached = require('memcached');
+var memcached = new Memcached('localhost:11211');
 const port = 3001;
 
 var con = mysql.createConnection({
