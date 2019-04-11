@@ -33,8 +33,8 @@ app.get('/hw7', function(req, res, next){
             con.query(query, [req.query.club, req.query.pos, req.query.club, req.query.pos], function (err, result, fields) {
                 if (err) 
                     console.log(err); 
-                console.log(result);
-                console.log(result[0]);
+                //console.log(result);
+                //console.log(result[0]);
                 var value = {club:req.query.club, pos: req.query.pos, max_assists: result[0][0].A, 
                     player: result[0][0].Player, avg_assists: result[1][0]["AVG(A)"]}
                 memcached.set(key, value, function(err, data){});
@@ -42,7 +42,7 @@ app.get('/hw7', function(req, res, next){
             });
         }else{
             console.log(data);
-            return res.json(data);
+            return res.json("data"+data);
         }
     });
 });
