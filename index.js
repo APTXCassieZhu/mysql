@@ -27,6 +27,7 @@ app.get('/hw7', function(req, res, next){
     var key = req.query.club + req.query.pos;
     memcached.get(key, function (err, data) {
         if(err){
+            console.log("err"+err);
             var query = "SELECT * FROM assists WHERE Club = ? AND POS = ? ORDER BY A DESC, GS DESC;";
             query += "SELECT AVG(A) FROM (SELECT * FROM assists WHERE Club= ? AND POS = ?) as avg;";
             con.query(query, [req.query.club, req.query.pos, req.query.club, req.query.pos], function (err, result, fields) {
