@@ -26,9 +26,10 @@ app.get('/', function(req, res, next) {
 app.get('/hw7', function(req, res, next){
     var key = req.query.club + req.query.pos;
     memcached.get(key, function (err, data) {
+        console.log("key is "+key);
         console.log("data is "+data);
-        if(err || !data){
-            console.log("err"+err);
+        if(err){
+            console.log("err is "+err);
             var query = "SELECT * FROM assists WHERE Club = ? AND POS = ? ORDER BY A DESC, GS DESC;";
             query += "SELECT AVG(A) FROM (SELECT * FROM assists WHERE Club= ? AND POS = ?) as avg;";
             con.query(query, [req.query.club, req.query.pos, req.query.club, req.query.pos], function (err, result, fields) {
@@ -38,16 +39,12 @@ app.get('/hw7', function(req, res, next){
                 //console.log(result[0]);
                 var value = {club:req.query.club, pos: req.query.pos, max_assists: result[0][0].A, 
                     player: result[0][0].Player, avg_assists: result[1][0]["AVG(A)"]}
-                console.log("set before");
-                memcached.set(key, value, function(err, data){
-                    console.log("set data"+data);
-                });
-                console.log("set after");
+                memcached.set(key, value, function(err){});
                 return res.json(value);
             });
         }else{
-            console.log(data);
-            return res.json("data"+data);
+            console.log("mem success");
+            return res.json(data);
         }
     });
 });
