@@ -45,7 +45,9 @@ app.get('/hw7', function(req, res, next){
                 //console.log(result[0]);
                 var value = {club:req.query.club, pos: req.query.pos, max_assists: result[0][0].A, 
                     player: result[0][0].Player, avg_assists: result[1][0]["AVG(A)"]}
-                memcached.set(key, value);
+                memcached.set(key, value, 1000,function (err) {
+                    console.log("try to set data");
+                });
                 memcached.get(key,function(err,data){console.log("test "+data)});
                 return res.json(value);
             });
