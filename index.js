@@ -21,7 +21,8 @@ con.connect(function(err) {
 
 
 app.get('/', function(req, res, next) {
-    memcached.set('key','value01');
+    memcached.set('key','value01', function (err, data) {
+    });
     memcached.get('key', function(err, data){
         console.log("data is "+data);
     });
